@@ -142,8 +142,10 @@
     <ClCompile Include="src\algorithms_data_structures.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\bubble_sort.h" />
     <ClInclude Include="include\queue.h" />
     <ClInclude Include="include\stack.h" />
+    <ClInclude Include="include\test.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

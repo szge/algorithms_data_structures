@@ -1,10 +1,7 @@
-#include "../include/stack.h"
-#include "../include/queue.h"
-
-#include <iostream>
+#include "../include/test.h"
 
 int main()
 {
-    alg::Queue<float>::test();
+    alg::Test::test_queue();
     return 0;
 }

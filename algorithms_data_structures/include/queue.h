@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 #include <string>
 
 namespace alg {
@@ -32,7 +31,7 @@ namespace alg {
 			_capacity = capacity;
 			_size = 0;
 			_front = 0;
-			_rear = -1;
+			_rear = -1; // set to -1 since enqueueing first item will set it to zero
 			_elements = new T[capacity];
 		}
 
@@ -41,7 +40,7 @@ namespace alg {
 		}
 
 		inline bool is_empty() {
-			return _size == 0 ? true : false;
+			return _size == 0;
 		}
 
 		/* Enqueue an element to the end of the queue
@@ -49,9 +48,9 @@ namespace alg {
 		*/
 		inline bool enqueue(T value) {
 			if (_size < _capacity) {
+					_rear = (_rear + 1) % _capacity;
+					_elements[_rear] = value;
 				_size++;
-				_rear = (_rear + 1) % _capacity;
-				_elements[_rear] = value;
 				return true;
 			}
 
@@ -70,7 +69,7 @@ namespace alg {
 			T& temp = _elements[_front]; // store the element for later
 
 			_size--;
-			if (_front != _rear) _front = (_front + 1) % _capacity; // this ensures circularity
+			_front = (_front + 1) % _capacity; // this ensures circularity
 
 			// Note: we technically don't have to remove the object from the array just change the index
 			return temp;
@@ -88,59 +87,26 @@ namespace alg {
 			}
 		}
 
-		// WARNING: make sure std::to_string works on type T
-		std::string toString() {
-			std::string str;
-			str += "==Printing Queue==\nArray: [";
-			for (int i = 0; i < _capacity; i++) {
-				str += "[";
-				// TODO: fix print idiot
-
-				// note: the reason I substitute (i <= _rear) with (i < _front + _size) is because of
-				// the case where the size is 0 and _front == _rear
-				if (_front <= i && i < _front + _size) {
-					str += std::to_string(_elements[i]);
-				}
-				str += "]";
-			}
-			str += "]\nSize: " + std::to_string(_size);
-			str += " Front index: " + std::to_string(_front);
-			str += " Rear index: " + std::to_string(_rear);
-			str += "\n==================\n";
-			return str;
+		inline int getCapacity() {
+			return _capacity;
 		}
 
-		static void test() {
-			alg::Queue<float> q = Queue(4);
-			std::cout << "new queue!\n";
-			std::cout << "enqueueing value 0.1\n";
-			q.enqueue((float) 0.1);
-			std::cout << "enqueueing value 0.2\n";
-			q.enqueue((float) 0.2);
-			std::cout << "enqueueing value 0.3\n";
-			q.enqueue((float) 0.3);
-
-			std::cout << "pushing value 0.4, return value when not full: " << q.enqueue((float) 0.4) << "\n";
-			// shouldn't do anything
-			std::cout << "pushing value 0.5, return value when full: " << q.enqueue((float) 0.5) << "\n";
-			
-			std::cout << q.toString();
-
-			while (!q.is_empty()) {
-				std::cout << "dequeueing value: " << q.dequeue() << "\n";
+		// WARNING: make sure std::to_string works on type T
+		std::string toString() {
+			int i = _front;
+			std::string str;
+			str += "Printing Queue:\n\t[";
+			if (_size > 0) {
+				while (i < _front + _size - 1) {
+					str += std::to_string(_elements[i % _capacity]) + ", ";
+					i++;
+				}
+				str += std::to_string(_elements[i % _capacity]);
 			}
-
-			std::cout << q.toString();
-
-			std::cout << "enqueueing value 0.1\n";
-			q.enqueue((float)0.1);
-			std::cout << q.toString();
-			std::cout << "enqueueing value 0.2\n";
-			q.enqueue((float)0.2);
-			std::cout << q.toString();
-			std::cout << "enqueueing value 0.3\n";
-			q.enqueue((float)0.3);
-			std::cout << q.toString();
+			str += "]\n\tSize: " + std::to_string(_size);
+			str += " Front index: " + std::to_string(_front);
+			str += " Rear index: " + std::to_string(_rear) + "\n";
+			return str;
 		}
 	};
 }
