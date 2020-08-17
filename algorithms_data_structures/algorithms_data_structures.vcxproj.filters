@@ -32,5 +32,8 @@
     <ClInclude Include="include\test.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\binary_search_tree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

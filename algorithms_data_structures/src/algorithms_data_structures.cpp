@@ -2,6 +2,6 @@
 
 int main()
 {
-    alg::Test::test_queue();
+    alg::Test::test_bst();
     return 0;
 }

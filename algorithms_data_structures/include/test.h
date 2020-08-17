@@ -2,7 +2,12 @@
 #include "stack.h"
 #include "queue.h"
 #include "bubble_sort.h"
+#include "binary_search_tree.h"
 #include <iostream>
+#include <vector>
+#include <array>
+#include <algorithm>
+#include <random>
 
 namespace alg {
 	class Test {
@@ -76,8 +81,6 @@ namespace alg {
 			while (!q.is_empty()) {
 				std::cout << "dequeueing value: " << q.dequeue() << "\n";
 			}
-
-
 		}
 
 		static void test_stack() {
@@ -96,6 +99,43 @@ namespace alg {
 			while (!s.is_empty()) {
 				std::cout << "popping value: " << s.pop() << "\n";
 			}
+		}
+
+		static void test_bst() {
+			std::cout << "Binary search tree test!\n";
+			alg::BST<int, double> bst;
+
+			// create a binary tree with keys from 0 to len - 1 and insert them in a random order
+			std::cout << "Creating a bst (key: int, value: double) from [0, 9] randomly shuffled:\n";
+			std::array<int, 10> numbers;
+			for (unsigned int i = 0; i < numbers.size(); i++) {
+				numbers[i] = i;
+			}
+			std::shuffle(numbers.begin(), numbers.end(), std::default_random_engine(1));
+
+			for (int i : numbers) {
+				bst.insert(i, i);
+			}
+
+			std::cout << bst.toString();
+
+			std::cout << "Inserting key, value 7, 7 \n";
+			bst.insert(7, 7);
+			std::cout << bst.toString();
+
+			std::cout << "Finding value for key \"5\": " << std::to_string(bst.getValue(5)) << "\n";
+
+			std::cout << "Deleting value 4 (leaf/no children):\n";
+			bst.deleteKey(4);
+			std::cout << bst.toString();
+
+			std::cout << "Deleting value 0 (one child):\n";
+			bst.deleteKey(0);
+			std::cout << bst.toString();
+
+			std::cout << "Deleting value 3 (root plus two children):\n";
+			bst.deleteKey(3);
+			std::cout << bst.toString();
 		}
 	};
 }

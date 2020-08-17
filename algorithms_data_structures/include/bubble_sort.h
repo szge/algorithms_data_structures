@@ -2,9 +2,16 @@
 
 namespace alg {
 	template <typename T>
-	// the reason we pass in start and end is because there is no elegant way
-	// to obtain the number of elements in the array
-	// note: mutates arr
+
+	/* Perform bubble sort on array <arr> starting from <start> until <end>
+	@param arr the array to be sorted
+	@param start the starting index of the subarray to be sorted
+	@param end the ending index of the subarray to be sorted
+
+	Notes: mutates arr;
+	start and end are passed because there is no elegant way
+	to obtain the number of elements in the array
+	*/
 	static void BubbleSort(T arr[], int start, int end) {
 		bool swapped = true; // something has been swapped so keep sorting
 		T temp;
