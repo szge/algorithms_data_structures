@@ -74,6 +74,14 @@ namespace alg {
 			return false;
 		}
 
+		/* Return the element at the top of the stack without modifying the stack itself.
+		* @return the element at the top of the stack
+		*/
+		inline T peek() {
+			if (m_size == 0) throw exception_empty;
+			return m_elements[m_size];
+		}
+
 		inline int getSize() const {
 			return m_size;
 		}

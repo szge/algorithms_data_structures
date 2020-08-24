@@ -81,12 +81,10 @@ namespace alg {
 		@return the element at the specified index
 		*/
 		inline const T& operator [] (int index) const {
-			if (index < m_capacity) {
-				return m_elements[(m_front + index) % m_capacity];
-			}
-			else {
+			if (index < 0 || index >= m_size) {
 				throw exception_ioob;
 			}
+			return m_elements[(m_front + index) % m_capacity];
 		}
 
 		inline int getSize() const {

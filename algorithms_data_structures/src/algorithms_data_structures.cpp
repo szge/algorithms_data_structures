@@ -2,6 +2,6 @@
 
 int main()
 {
-    alg::Test::test_bst();
+    alg::Test::test_elo();
     return 0;
 }

@@ -1,7 +1,5 @@
 #pragma once
-#include <iostream>
 #include <string>
-#include <typeinfo>
 
 namespace alg {
 	template <typename KeyT, typename ValueT>
@@ -14,20 +12,20 @@ namespace alg {
 			}
 		} exception_key_not_found;
 
-		struct treeNode {
+		struct TreeNode {
 			KeyT key;
 			ValueT value;
-			treeNode* left;
-			treeNode* right;
+			TreeNode* left;
+			TreeNode* right;
 		};
 
 	// member variables
 	private:
-		treeNode* m_root;
+		TreeNode* m_root;
 
 	// methods
 	private:
-		void destruct(treeNode* node) {
+		void destruct(TreeNode* node) {
 			if (node == nullptr) return;
 
 			// post order traversal
@@ -36,7 +34,7 @@ namespace alg {
 			delete node;
 		}
 
-		std::string toString(const treeNode* node, const int indent) {
+		std::string toString(const TreeNode* node, const int indent) {
 			if (node == nullptr) return "";
 
 			std::string str;
@@ -56,8 +54,8 @@ namespace alg {
 		/* Returns the value corresponding to the given key
 		* @return the corresponding value
 		*/
-		treeNode* find(const KeyT& key) {
-			treeNode* node = m_root;
+		inline TreeNode* find(const KeyT& key) {
+			TreeNode* node = m_root;
 			while (node != nullptr && key != node->key) {
 				if (key < node->value) {
 					node = node->left;
@@ -72,7 +70,7 @@ namespace alg {
 
 		/* Finds the minimum node belonging to the tree starting at <node>
 		*/
-		treeNode* minimum(treeNode* node) {
+		inline TreeNode* minimum(TreeNode* node) {
 			while (node->left != nullptr) {
 				node = node->left;
 			}
@@ -83,9 +81,9 @@ namespace alg {
 		/* Finds the parent node of a given node. <node> should be a valid node in the tree
 		* @return the parent node of <node>, nullptr if <node> is m_root
 		*/
-		treeNode* getParent(treeNode* node) {
-			treeNode* current = m_root;
-			treeNode* previous = nullptr;
+		TreeNode* getParent(TreeNode* node) {
+			TreeNode* current = m_root;
+			TreeNode* previous = nullptr;
 			while (current != nullptr && current != node) {
 				previous = current;
 				if (node->key < current->key) {
@@ -110,15 +108,15 @@ namespace alg {
 
 		void insert(const KeyT& key, const ValueT& value) {
 			// make a new node
-			treeNode* newNode = new treeNode;
+			TreeNode* newNode = new TreeNode;
 			newNode->key = key;
 			newNode->value = value;
 			newNode->left = nullptr;
 			newNode->right = nullptr;
 
 			// traverse through the tree keeping track of the current and previous nodes
-			treeNode* current = m_root;
-			treeNode* previous = nullptr;
+			TreeNode* current = m_root;
+			TreeNode* previous = nullptr;
 			while (current != nullptr) {
 				previous = current;
 				if (key < current->key) {
@@ -146,7 +144,7 @@ namespace alg {
 		* Note: throws an error if the key is not found
 		*/
 		ValueT getValue(const KeyT& key) {
-			treeNode* node = find(key);
+			TreeNode* node = find(key);
 
 			if (node == nullptr) {
 				throw exception_key_not_found;
@@ -156,11 +154,11 @@ namespace alg {
 		}
 
 		bool deleteKey(const KeyT& key) {
-			treeNode* node = find(key);
+			TreeNode* node = find(key);
 			
 			if (node == nullptr) return false;
 
-			treeNode* parent = getParent(node);
+			TreeNode* parent = getParent(node);
 
 			if (node->left == nullptr) {
 				// case: there are no children or there is only a right child
@@ -195,7 +193,7 @@ namespace alg {
 				// RE: https://en.wikipedia.org/wiki/Binary_search_tree#Deletion
 
 				// new base = minimum from right subtree
-				treeNode* newRoot = minimum(node->right);
+				TreeNode* newRoot = minimum(node->right);
 
 				// copy values from newRoot to the root node
 				node->key = newRoot->key;
@@ -203,7 +201,7 @@ namespace alg {
 
 				// find newRoot's parent and replace newRoot with newRoot's right child
 				// (it can only have right children)
-				treeNode* parent = getParent(newRoot);
+				TreeNode* parent = getParent(newRoot);
 
 				if (newRoot->key < parent->key) {
 					// newRoot used to be a left child so replace itself with its children

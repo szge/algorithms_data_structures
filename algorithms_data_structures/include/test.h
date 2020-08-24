@@ -1,34 +1,56 @@
 #pragma once
+#include "bubble_sort.h"
 #include "stack.h"
 #include "queue.h"
-#include "bubble_sort.h"
 #include "binary_search_tree.h"
+#include "linked_list.h"
+#include "elo.h"
 #include <iostream>
 #include <vector>
 #include <array>
 #include <algorithm>
 #include <random>
 
+using namespace std;
+
 namespace alg {
 	class Test {
 	public:
 		static void test_bubble_sort() {
-			std::cout << "Bubble sort test!\n";
+			cout << "Bubble sort test!\n";
 			int arr[8] = { 8, 7, 6, 5, 4, 3, 2, 1 };
-			std::cout << "Array before sorting: \n[";
-			int len = std::size(arr) - 1;
+			cout << "Array before sorting: \n[";
+			int len = size(arr) - 1;
 			for (int i = 0; i < len; i++) {
-				std::cout << arr[i] << ", ";
+				cout << arr[i] << ", ";
 			}
-			std::cout << arr[len] << "]\n";
+			cout << arr[len] << "]\n";
 
 			alg::BubbleSort(arr, 0, len);
 
-			std::cout << "Array after sorting: \n[";
+			cout << "Array after sorting: \n[";
 			for (int i = 0; i < len; i++) {
-				std::cout << arr[i] << ", ";
+				cout << arr[i] << ", ";
 			}
-			std::cout << arr[len] << "]\n";
+			cout << arr[len] << "]\n";
+		}
+
+		static void test_stack() {
+			alg::Stack<float> s(4);
+			cout << "new stack!\n";
+			cout << "pushing value 10.5\n";
+			s.push(10.5);
+			cout << "pushing value 5\n";
+			s.push(5);
+			cout << "pushing value -3.14159\n";
+			s.push((float)-3.14159);
+
+			cout << "pushing 1, return value when not full: " << s.push(1) << "\n";
+			cout << "pushing 1, return value when full: " << s.push(1) << "\n";
+
+			while (!s.is_empty()) {
+				cout << "popping value: " << s.pop() << "\n";
+			}
 		}
 
 		static void test_queue() {
@@ -48,94 +70,130 @@ namespace alg {
 
 			delete c;*/
 			alg::Queue<int> q(4);
-			std::cout << "new queue!\n";
-			std::cout << "enqueueing value 1\n";
+			cout << "new queue!\n";
+			cout << "enqueueing value 1\n";
 			q.enqueue(1);
-			std::cout << "enqueueing value 2\n";
+			cout << "enqueueing value 2\n";
 			q.enqueue(2);
-			std::cout << "enqueueing value 3\n";
+			cout << "enqueueing value 3\n";
 			q.enqueue(3);
 
-			std::cout << "enqueueing value 4, return value when not full: " << q.enqueue(4) << "\n";
+			cout << "enqueueing value 4, return value when not full: " << q.enqueue(4) << "\n";
 			// shouldn't do anything
-			std::cout << "enqueueing value 5, return value when full: " << q.enqueue(5) << "\n";
+			cout << "enqueueing value 5, return value when full: " << q.enqueue(5) << "\n";
 
-			std::cout << q.toString();
+			cout << q.toString();
 
 			while (!q.is_empty()) {
-				std::cout << "dequeueing value: " << q.dequeue() << "\n";
+				cout << "dequeueing value: " << q.dequeue() << "\n";
 			}
 
-			std::cout << q.toString();
+			cout << q.toString();
 
-			std::cout << "enqueueing value 1\n";
+			cout << "enqueueing value 1\n";
 			q.enqueue(1);
-			std::cout << q.toString();
-			std::cout << "enqueueing value 2\n";
+			cout << q.toString();
+			cout << "enqueueing value 2\n";
 			q.enqueue(2);
-			std::cout << q.toString();
-			std::cout << "enqueueing value 3\n";
+			cout << q.toString();
+			cout << "enqueueing value 3\n";
 			q.enqueue(3);
-			std::cout << q.toString();
+			cout << q.toString();
+
+			cout << "indexing element at position 0: " << q[0] << "\n";
+			cout << "indexing element at position 1: " << q[1] << "\n";
+			cout << "indexing element at position 2: " << q[2] << "\n";
 
 			while (!q.is_empty()) {
-				std::cout << "dequeueing value: " << q.dequeue() << "\n";
-			}
-		}
-
-		static void test_stack() {
-			alg::Stack<float> s(4);
-			std::cout << "new stack!\n";
-			std::cout << "pushing value 10.5\n";
-			s.push(10.5);
-			std::cout << "pushing value 5\n";
-			s.push(5);
-			std::cout << "pushing value -3.14159\n";
-			s.push((float)-3.14159);
-
-			std::cout << "pushing 1, return value when not full: " << s.push(1) << "\n";
-			std::cout << "pushing 1, return value when full: " << s.push(1) << "\n";
-
-			while (!s.is_empty()) {
-				std::cout << "popping value: " << s.pop() << "\n";
+				cout << "dequeueing value: " << q.dequeue() << "\n";
 			}
 		}
 
 		static void test_bst() {
-			std::cout << "Binary search tree test!\n";
+			cout << "Binary search tree test!\n";
 			alg::BST<int, double> bst;
 
 			// create a binary tree with keys from 0 to len - 1 and insert them in a random order
-			std::cout << "Creating a bst (key: int, value: double) from [0, 9] randomly shuffled:\n";
-			std::array<int, 10> numbers;
+			cout << "Creating a bst (key: int, value: double) from [0, 9] randomly shuffled:\n";
+			array<int, 10> numbers;
 			for (unsigned int i = 0; i < numbers.size(); i++) {
 				numbers[i] = i;
 			}
-			std::shuffle(numbers.begin(), numbers.end(), std::default_random_engine(1));
+			shuffle(numbers.begin(), numbers.end(), default_random_engine(1));
 
 			for (int i : numbers) {
 				bst.insert(i, i);
 			}
 
-			std::cout << bst.toString();
+			cout << bst.toString();
 
-			std::cout << "Inserting key, value 7, 7 \n";
+			cout << "Inserting key, value 7, 7 \n";
 			bst.insert(7, 7);
-			std::cout << bst.toString();
+			cout << bst.toString();
 
-			std::cout << "Finding value for key \"5\": " << std::to_string(bst.getValue(5)) << "\n";
+			cout << "Finding value for key \"5\": " << to_string(bst.getValue(5)) << "\n";
 
-			std::cout << "Deleting value 4 (leaf/no children):\n";
+			cout << "Deleting value 4 (leaf/no children):\n";
 			bst.deleteKey(4);
-			std::cout << bst.toString();
+			cout << bst.toString();
 
-			std::cout << "Deleting value 0 (one child):\n";
+			cout << "Deleting value 0 (one child):\n";
 			bst.deleteKey(0);
-			std::cout << bst.toString();
+			cout << bst.toString();
 
-			std::cout << "Deleting value 3 (root plus two children):\n";
+			cout << "Deleting value 3 (root plus two children):\n";
 			bst.deleteKey(3);
-			std::cout << bst.toString();
+			cout << bst.toString();
+		}
+
+		static void test_linked_list() {
+			LinkedList<int> linkedList;
+			cout << "Linked list test!\n";
+			cout << linkedList.toString();
+
+			cout << "Pushing value 3 to the front:\n";
+			linkedList.push(3);
+			cout << linkedList.toString();
+
+			cout << "Pushing value 1 to the back:\n";
+			linkedList.pushLast(1);
+			cout << linkedList.toString();
+
+			cout << "Popping from the front: " << linkedList.pop() << "\n";
+			cout << linkedList.toString();
+
+			cout << "Popping from the front: " << linkedList.pop() << "\n";
+			cout << linkedList.toString();
+
+			cout << "Pushing value 1 to the back:\n";
+			linkedList.pushLast(1);
+			cout << linkedList.toString();
+
+			cout << "Popping from the back: " << linkedList.popLast() << "\n";
+			cout << linkedList.toString();
+		}
+
+		static void test_elo() {
+			cout << "Elo test!\n";
+
+			int playerA = 1613;
+			cout << "Player A's elo is 1613\n";
+
+			playerA = (int)round(get<0>(EloEvaluate(playerA, 1609, 0)));
+			cout << "Player A loses to a player rated 1609. Their new elo is " << playerA << "\n";
+
+			playerA = (int)round(get<0>(EloEvaluate(playerA, 1477, 0.5)));
+			cout << "Player A draws with a player rated 1477. Their new elo is " << playerA << "\n";
+
+			playerA = (int)round(get<0>(EloEvaluate(playerA, 1388, 1)));
+			cout << "Player A wins against a player rated 1388. Their new elo is " << playerA << "\n";
+
+			playerA = (int)round(get<0>(EloEvaluate(playerA, 1586, 1)));
+			cout << "Player A wins against a player rated 1586. Their new elo is " << playerA << "\n";
+
+			playerA = (int)round(get<0>(EloEvaluate(playerA, 1720, 0)));
+			cout << "Player A loses to a player rated 1720. Their new elo is " << playerA << "\n";
+
 		}
 	};
 }

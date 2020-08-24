@@ -144,6 +144,8 @@
   <ItemGroup>
     <ClInclude Include="include\binary_search_tree.h" />
     <ClInclude Include="include\bubble_sort.h" />
+    <ClInclude Include="include\elo.h" />
+    <ClInclude Include="include\linked_list.h" />
     <ClInclude Include="include\queue.h" />
     <ClInclude Include="include\stack.h" />
     <ClInclude Include="include\test.h" />
